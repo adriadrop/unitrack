@@ -6,7 +6,7 @@ import { HttpLink } from 'apollo-link-http'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -16,7 +16,27 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
+import Link from '@material-ui/core/Link';
+import Typography from '@material-ui/core/Typography';
 
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -29,12 +49,20 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
+  toolbarTitle: {
+    flexGrow: 1,
+  },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  root: {
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    },
   },
 }));
 
@@ -48,10 +76,16 @@ export const client = new ApolloClient({
   cache: new InMemoryCache()
 })
 
+export const numberFormat = (value) =>
+  new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'USD'
+  }).format(value);
+
 
 const NEW_PAIRS = gql `
     query pairs{
-    pairs(where: {reserveUSD_gt:25000} first: 20, 
+    pairs(where: {reserveUSD_gt:5000} first: 20, 
     orderBy: createdAtTimestamp, orderDirection: desc) {
       id
       txCount
@@ -82,17 +116,19 @@ function App() {
     <Container component="main" maxWidth="xl">
       <CssBaseline />
       <div className={classes.paper}>
+      <Typography variant="h4" color="inherit" noWrap className={classes.toolbarTitle}>UNITRACK</Typography>
+      <Typography className={classes.root}>
       <TableContainer component={Paper}>
       <Table className={classes.table} size="small" aria-label="a dense table">
       <TableHead>
           <TableRow>
-          <TableCell>Token 1 Uniswap/Etherscan</TableCell>
-          <TableCell>Token 2 Uniswap/Etherscan</TableCell>
-          <TableCell>TX count</TableCell>
-          <TableCell>Volume USD</TableCell>
-          <TableCell>Reserve USD</TableCell>
-          <TableCell>Creation</TableCell>
-          <TableCell>Uniswap</TableCell>
+          <StyledTableCell>Token 1 Uniswap/Etherscan</StyledTableCell>
+          <StyledTableCell>Token 2 Uniswap/Etherscan</StyledTableCell>
+          <StyledTableCell>TX count</StyledTableCell>
+          <StyledTableCell>Volume USD</StyledTableCell>
+          <StyledTableCell>Current liquidty</StyledTableCell>
+          <StyledTableCell>Creation date</StyledTableCell>
+          <StyledTableCell>Uniswap</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -112,13 +148,13 @@ function App() {
             formattedDate = formattedDate + " " + formattedTime;
             return (
                <TableRow key = {key}>
-                   <TableCell>{item.token0.name} <a href= {"https://uniswap.info/token/" + item.token0.id} target="_blank">1</a>  <a href= {"https://etherscan.io/address/" + item.token0.id} target="_blank">2</a></TableCell>  
-                   <TableCell>{item.token1.name} <a href= {"https://uniswap.info/token/" + item.token1.id} target="_blank">1</a>  <a href= {"https://etherscan.io/address/" + item.token1.id} target="_blank">2</a></TableCell>                  
+                   <TableCell>{item.token0.name} <Link href= {"https://uniswap.info/token/" + item.token0.id} target="_blank" variant="body2">1</Link>  <Link href= {"https://etherscan.io/address/" + item.token0.id} target="_blank">2</Link></TableCell>  
+                   <TableCell>{item.token1.name} <Link href= {"https://uniswap.info/token/" + item.token1.id} target="_blank" variant="body2">1</Link>  <Link href= {"https://etherscan.io/address/" + item.token1.id} target="_blank">2</Link></TableCell>                  
                    <TableCell>{item.txCount}</TableCell>
-                   <TableCell>{item.volumeUSD}</TableCell>
-                   <TableCell>{item.reserveUSD}</TableCell>
+                   <TableCell>{numberFormat(item.volumeUSD)}</TableCell>
+                   <TableCell>{numberFormat(item.reserveUSD)}</TableCell>
                    <TableCell>{formattedDate}</TableCell>                  
-                   <TableCell><a href= {"https://uniswap.info/pair/" + item.id} target="_blank">View pair</a></TableCell> 
+                   <TableCell><Link href= {"https://uniswap.info/pair/" + item.id} target="_blank" variant="body2">View pair</Link></TableCell> 
                </TableRow>
              )
           
@@ -126,7 +162,8 @@ function App() {
         }
         </TableBody>
         </Table>
-      </TableContainer>             
+      </TableContainer>      
+      </Typography>       
       </div>
     </Container>
   )
