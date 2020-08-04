@@ -16,5 +16,6 @@ ReactDOM.render(
 </ApolloProvider>,
   document.getElementById('root')
 )
-
+// reloade window for new info
+setTimeout(function () {  window.location.reload(1); }, 5000);
 serviceWorker.register();
