@@ -148,7 +148,7 @@ function App() {
 
   const SelectReserveUSD = () => (
     <FormControl className={classes.formControl}>
-    <InputLabel id="demo-simple-select-label">Liquidty USD</InputLabel>
+    <InputLabel id="demo-simple-select-label">Liquidty USD &gt;</InputLabel>
     <Select     
       labelId="demo-simple-select-label"
       id="demo-simple-select"
@@ -166,7 +166,7 @@ function App() {
 
   const SelectTxCount = () => (
     <FormControl className={classes.formControl}>
-    <InputLabel id="demo-simple-select-label">Tx Count</InputLabel>
+    <InputLabel id="demo-simple-select-label">Tx Count &gt;</InputLabel>
     <Select     
       labelId="demo-simple-select-label"
       id="demo-simple-select"
@@ -214,8 +214,8 @@ function App() {
       
       <Typography className={classes.root}>
       <div>
-      <SelectTxCount/>
       <SelectReserveUSD/>
+      <SelectTxCount/>
       <SelectTimeStamp/>    
       <TableContainer component={Paper}>
       <Table className={classes.table} size="small" aria-label="a dense table">
@@ -258,8 +258,7 @@ function App() {
                    <TableCell>{formattedDate}</TableCell>                  
                    <TableCell><Link href= {"https://uniswap.info/pair/" + item.id} target="_blank" variant="body2">View pair</Link></TableCell> 
                </TableRow>
-             )
-          
+             )          
           })
         }
         </TableBody>
