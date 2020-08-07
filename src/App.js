@@ -104,7 +104,7 @@ export const numberFormat = (value) =>
 
 const NEW_PAIRS = gql `
   query pairs($reserveUSD: Int!, $timeStamp: Int!, $txCount: Int!){
-    pairs(where: {reserveUSD_gt: $reserveUSD, createdAtTimestamp_gt: $timeStamp, txCount_gt: $txCount} first: 250, 
+    pairs(where: {reserveUSD_gt: $reserveUSD, createdAtTimestamp_gt: $timeStamp, txCount_gt: $txCount} first: 500, 
     orderBy: createdAtTimestamp, orderDirection: desc) {
       id
       txCount
@@ -135,8 +135,8 @@ function App() {
   const { loading: newLoading, data: data } = useQuery(NEW_PAIRS, {
     variables: {
       reserveUSD: filtersState.reserveState,
-      timeStamp: filtersState.timeStampState,  
-      txCount: filtersState.txCountState
+      txCount: filtersState.txCountState,
+      timeStamp: Math.floor(Date.now() / 1000) - filtersState.timeStampState  
     }
   })
 
@@ -190,7 +190,7 @@ function App() {
       labelId="demo-simple-select-label"
       id="demo-simple-select"
       value={filtersState.timeStampState} 
-      onChange={(event) => setFilters({reserveState: filtersState.reserveState, timeStampState: Math.floor(Date.now() / 1000) - event.target.value, txCountState: filtersState.txCountState})} >
+      onChange={(event) => setFilters({reserveState: filtersState.reserveState, timeStampState: event.target.value, txCountState: filtersState.txCountState})} >
 
           <MenuItem value={300}>5 Minutes</MenuItem>
           <MenuItem value={900}>15 Minutes</MenuItem>
