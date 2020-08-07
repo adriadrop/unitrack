@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css'
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
@@ -20,6 +20,13 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import useSound from 'use-sound';
 import alarm from './sounds/alarm.mp3';
+//import Select from 'react-select';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import MenuItem from '@material-ui/core/MenuItem';
+
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -65,6 +72,13 @@ const useStyles = makeStyles((theme) => ({
     '& > * + *': {
       marginLeft: theme.spacing(2),
     },
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 220,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
   },
 }));
 
@@ -112,62 +126,97 @@ const NEW_PAIRS = gql `
 
 function App() {
 
-  // 20 under first 5 minutes
-  // 25 under 10 minutes
-  // 50 under 15 minutes
-  // 100 under 30 minutes
-  // 100 under 60 minutes
+  const [filtersState, setFilters] = useState({
+    reserveState: 5000,
+    timeStampState: 31536000,  // 1 year   should be 20.5.2020 since this is uniswap 2 launch date
+    txCountState: 100,
+  });
 
-  const { loading: newLoading5, data: data5 } = useQuery(NEW_PAIRS, {
+  const { loading: newLoading, data: data } = useQuery(NEW_PAIRS, {
     variables: {
-      reserveUSD: 5000,
-      timeStamp: Math.floor(Date.now() / 1000) - 300,  // 5 minutes
-      txCount: 20
-    }
-  })
-
-
-  const { loading: newLoading50, data: data50 } = useQuery(NEW_PAIRS, {
-    variables: {
-      reserveUSD: 5000,
-      timeStamp: Math.floor(Date.now() / 1000) - 900,  // 15 minutes
-      txCount: 50
-    }
-  })
-
-  const { loading: newLoading100, data: data100 } = useQuery(NEW_PAIRS, {
-    variables: {
-      reserveUSD: 5000,
-      timeStamp: Math.floor(Date.now() / 1000) - 3800,  // an hour
-      txCount: 100
-    }
-  })
-
-  const { loading: newLoading200, data: data200 } = useQuery(NEW_PAIRS, {
-    variables: {
-      reserveUSD: 5000,
-      timeStamp: Math.floor(Date.now() / 1000) - 7200,  // 2 hours
-      txCount: 300
+      reserveUSD: filtersState.reserveState,
+      timeStamp: filtersState.timeStampState,  
+      txCount: filtersState.txCountState
     }
   })
 
   const [play] = useSound(alarm,{ volume: 0.95 });
+  const pairs = data && data.pairs
 
-  const pairs5 = data5 && data5.pairs
-  const pairs50 = data50 && data50.pairs
-  const pairs100 = data100 && data100.pairs
-  const pairs200 = data200 && data200.pairs
-  
   const classes = useStyles();
   var rowNumber = 0;
+
+  const SelectReserveUSD = () => (
+    <FormControl className={classes.formControl}>
+    <InputLabel id="demo-simple-select-label">Liquidty USD</InputLabel>
+    <Select     
+      labelId="demo-simple-select-label"
+      id="demo-simple-select"
+      value={filtersState.reserveState} 
+      onChange={(event) => setFilters({reserveState: event.target.value, timeStampState: filtersState.timeStampState, txCountState: filtersState.txCountState})} >
+
+          <MenuItem value={100}>$100</MenuItem>
+          <MenuItem value={1000}>$1,000</MenuItem>
+          <MenuItem value={5000}>$5,000</MenuItem>
+          <MenuItem value={10000}>$10,000</MenuItem>    
+          <MenuItem value={100000}>$100,000</MenuItem>                    
+      </Select>
+    </FormControl>
+  )
+
+  const SelectTxCount = () => (
+    <FormControl className={classes.formControl}>
+    <InputLabel id="demo-simple-select-label">Tx Count</InputLabel>
+    <Select     
+      labelId="demo-simple-select-label"
+      id="demo-simple-select"
+      value={filtersState.txCountState} 
+      onChange={(event) => setFilters({reserveState: filtersState.reserveState, timeStampState: filtersState.timeStampState, txCountState: event.target.value})} >
+
+          <MenuItem value={1}>1</MenuItem>
+          <MenuItem value={10}>10</MenuItem>
+          <MenuItem value={100}>100</MenuItem>
+          <MenuItem value={1000}>1000</MenuItem>    
+          <MenuItem value={10000}>10000</MenuItem>                    
+      </Select>
+    </FormControl>
+  )
+
+  const SelectTimeStamp = () => (
+
+    <FormControl className={classes.formControl}>
+    <InputLabel id="demo-simple-select-label">Added on Uniswap ago</InputLabel>
+    <Select     
+      labelId="demo-simple-select-label"
+      id="demo-simple-select"
+      value={filtersState.timeStampState} 
+      onChange={(event) => setFilters({reserveState: filtersState.reserveState, timeStampState: Math.floor(Date.now() / 1000) - event.target.value, txCountState: filtersState.txCountState})} >
+
+          <MenuItem value={300}>5 Minutes</MenuItem>
+          <MenuItem value={900}>15 Minutes</MenuItem>
+          <MenuItem value={1800}>30 Minutes</MenuItem>
+          <MenuItem value={3600}>60 Minutes</MenuItem>    
+          <MenuItem value={7200}>120 Minutes</MenuItem>    
+          <MenuItem value={86400}>1 Day</MenuItem>     
+          <MenuItem value={172800}>2 Days</MenuItem>     
+          <MenuItem value={604800}>A week</MenuItem>   
+          <MenuItem value={2592000}>A month</MenuItem>   
+          <MenuItem value={31536000}>Since UNI2 launch</MenuItem>   
+          </Select>          
+    </FormControl>
+  )
 
   return (
     <Container component="main" maxWidth="xl">
       <CssBaseline />
       <div className={classes.paper}>
-      <Typography variant="h4" color="inherit" noWrap className={classes.toolbarTitle}>UNITRACK</Typography>
+      <Typography variant="h1" color="inherit" noWrap className={classes.toolbarTitle}>UNITRACK</Typography>
+      
       <Typography className={classes.root}>
-
+      <div>
+      <SelectTxCount/>
+      <SelectReserveUSD/>
+      <SelectTimeStamp/>    
       <TableContainer component={Paper}>
       <Table className={classes.table} size="small" aria-label="a dense table">
       <TableHead>
@@ -175,7 +224,7 @@ function App() {
           <StyledTableCell></StyledTableCell>
           <StyledTableCell>Token 1 Uniswap/Etherscan</StyledTableCell>
           <StyledTableCell>Token 2 Uniswap/Etherscan</StyledTableCell>
-          <StyledTableCell>TX count</StyledTableCell>
+          <StyledTableCell>Total TX count</StyledTableCell>
           <StyledTableCell>Volume USD</StyledTableCell>
           <StyledTableCell>Current liquidty</StyledTableCell>
           <StyledTableCell>Creation date</StyledTableCell>
@@ -184,151 +233,10 @@ function App() {
         </TableHead>
         <TableBody>
         {
-          newLoading5
+          newLoading
           ? 'Loading pairs data...'
           :   
-          pairs5.map(function(item, key) {
-            
-            var d = new Date(item.createdAtTimestamp * 1000);
-            var formattedDate = d.getDate() + "/" + (d.getMonth() + 1); // + "-" + d.getFullYear();
-            var hours = (d.getHours() < 10) ? "0" + d.getHours() : d.getHours();
-            var minutes = (d.getMinutes() < 10) ? "0" + d.getMinutes() : d.getMinutes();
-            var formattedTime = hours + ":" + minutes;
-            
-            formattedDate = formattedDate + " " + formattedTime;
-            rowNumber++;
-
-            return (
-               <TableRow key = {key}>
-                    <TableCell>{rowNumber}</TableCell>
-                   <TableCell>{item.token0.name} <Link href= {"https://uniswap.info/token/" + item.token0.id} target="_blank" variant="body2">1</Link>  <Link href= {"https://etherscan.io/address/" + item.token0.id} target="_blank">2</Link></TableCell>  
-                   <TableCell>{item.token1.name} <Link href= {"https://uniswap.info/token/" + item.token1.id} target="_blank" variant="body2">1</Link>  <Link href= {"https://etherscan.io/address/" + item.token1.id} target="_blank">2</Link></TableCell>                  
-                   <TableCell>{item.txCount}</TableCell>
-                   <TableCell>{numberFormat(item.volumeUSD)}</TableCell>
-                   <TableCell>{numberFormat(item.reserveUSD)}</TableCell>
-                   <TableCell>{formattedDate}</TableCell>                  
-                   <TableCell><Link href= {"https://uniswap.info/pair/" + item.id} target="_blank" variant="body2">View pair</Link></TableCell> 
-               </TableRow>
-             )
-          
-          })
-        }
-        </TableBody>
-        </Table>
-
-      <Table className={classes.table} size="small" aria-label="a dense table">
-      <TableHead>
-          <TableRow>
-          <StyledTableCell></StyledTableCell>
-          <StyledTableCell>Token 1 Uniswap/Etherscan</StyledTableCell>
-          <StyledTableCell>Token 2 Uniswap/Etherscan</StyledTableCell>
-          <StyledTableCell>TX count</StyledTableCell>
-          <StyledTableCell>Volume USD</StyledTableCell>
-          <StyledTableCell>Current liquidty</StyledTableCell>
-          <StyledTableCell>Creation date</StyledTableCell>
-          <StyledTableCell>Uniswap</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-        {
-          newLoading50
-          ? 'Loading pairs data...'
-          :   
-          pairs50.map(function(item, key) {
-            
-            var d = new Date(item.createdAtTimestamp * 1000);
-            var formattedDate = d.getDate() + "/" + (d.getMonth() + 1); // + "-" + d.getFullYear();
-            var hours = (d.getHours() < 10) ? "0" + d.getHours() : d.getHours();
-            var minutes = (d.getMinutes() < 10) ? "0" + d.getMinutes() : d.getMinutes();
-            var formattedTime = hours + ":" + minutes;
-            
-            formattedDate = formattedDate + " " + formattedTime;
-            rowNumber++;
-
-            return (
-               <TableRow key = {key}>
-                    <TableCell>{rowNumber}</TableCell>
-                   <TableCell>{item.token0.name} <Link href= {"https://uniswap.info/token/" + item.token0.id} target="_blank" variant="body2">1</Link>  <Link href= {"https://etherscan.io/address/" + item.token0.id} target="_blank">2</Link></TableCell>  
-                   <TableCell>{item.token1.name} <Link href= {"https://uniswap.info/token/" + item.token1.id} target="_blank" variant="body2">1</Link>  <Link href= {"https://etherscan.io/address/" + item.token1.id} target="_blank">2</Link></TableCell>                  
-                   <TableCell>{item.txCount}</TableCell>
-                   <TableCell>{numberFormat(item.volumeUSD)}</TableCell>
-                   <TableCell>{numberFormat(item.reserveUSD)}</TableCell>
-                   <TableCell>{formattedDate}</TableCell>                  
-                   <TableCell><Link href= {"https://uniswap.info/pair/" + item.id} target="_blank" variant="body2">View pair</Link></TableCell> 
-               </TableRow>
-             )
-          
-          })
-        }
-        </TableBody>
-        </Table>
-
-        <Table className={classes.table} size="small" aria-label="a dense table">
-      <TableHead>
-          <TableRow>
-          <StyledTableCell></StyledTableCell>
-          <StyledTableCell>Token 1 Uniswap/Etherscan</StyledTableCell>
-          <StyledTableCell>Token 2 Uniswap/Etherscan</StyledTableCell>
-          <StyledTableCell>TX count</StyledTableCell>
-          <StyledTableCell>Volume USD</StyledTableCell>
-          <StyledTableCell>Current liquidty</StyledTableCell>
-          <StyledTableCell>Creation date</StyledTableCell>
-          <StyledTableCell>Uniswap</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-        {
-          newLoading100
-          ? 'Loading pairs data...'
-          :   
-          pairs100.map(function(item, key) {
-            
-            var d = new Date(item.createdAtTimestamp * 1000);
-            var formattedDate = d.getDate() + "/" + (d.getMonth() + 1); // + "-" + d.getFullYear();
-            var hours = (d.getHours() < 10) ? "0" + d.getHours() : d.getHours();
-            var minutes = (d.getMinutes() < 10) ? "0" + d.getMinutes() : d.getMinutes();
-            var formattedTime = hours + ":" + minutes;
-            
-            formattedDate = formattedDate + " " + formattedTime;
-            rowNumber++;
-
-            return (
-               <TableRow key = {key}>
-                    <TableCell>{rowNumber}</TableCell>
-                   <TableCell>{item.token0.name} <Link href= {"https://uniswap.info/token/" + item.token0.id} target="_blank" variant="body2">1</Link>  <Link href= {"https://etherscan.io/address/" + item.token0.id} target="_blank">2</Link></TableCell>  
-                   <TableCell>{item.token1.name} <Link href= {"https://uniswap.info/token/" + item.token1.id} target="_blank" variant="body2">1</Link>  <Link href= {"https://etherscan.io/address/" + item.token1.id} target="_blank">2</Link></TableCell>                  
-                   <TableCell>{item.txCount}</TableCell>
-                   <TableCell>{numberFormat(item.volumeUSD)}</TableCell>
-                   <TableCell>{numberFormat(item.reserveUSD)}</TableCell>
-                   <TableCell>{formattedDate}</TableCell>                  
-                   <TableCell><Link href= {"https://uniswap.info/pair/" + item.id} target="_blank" variant="body2">View pair</Link></TableCell> 
-               </TableRow>
-             )
-          
-          })
-        }
-        </TableBody>
-        </Table>
-      
-        <Table className={classes.table} size="small" aria-label="a dense table">
-      <TableHead>
-          <TableRow>
-          <StyledTableCell></StyledTableCell>
-          <StyledTableCell>Token 1 Uniswap/Etherscan</StyledTableCell>
-          <StyledTableCell>Token 2 Uniswap/Etherscan</StyledTableCell>
-          <StyledTableCell>TX count</StyledTableCell>
-          <StyledTableCell>Volume USD</StyledTableCell>
-          <StyledTableCell>Current liquidty</StyledTableCell>
-          <StyledTableCell>Creation date</StyledTableCell>
-          <StyledTableCell>Uniswap</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-        {
-          newLoading200
-          ? 'Loading pairs data...'
-          :   
-          pairs200.map(function(item, key) {
+          pairs.map(function(item, key) {
             
             var d = new Date(item.createdAtTimestamp * 1000);
             var formattedDate = d.getDate() + "/" + (d.getMonth() + 1); // + "-" + d.getFullYear();
@@ -358,7 +266,7 @@ function App() {
         </Table>
 
       </TableContainer>      
-
+      </div>  
       </Typography>       
       </div>
     </Container>

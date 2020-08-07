@@ -17,5 +17,5 @@ ReactDOM.render(
   document.getElementById('root')
 )
 // reloade window for new info
-setTimeout(function () {  window.location.reload(1); }, 55000);
+//setTimeout(function () {  window.location.reload(1); }, 55000);
 serviceWorker.register();
