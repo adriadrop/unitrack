@@ -6,6 +6,7 @@ import { HttpLink } from 'apollo-link-http'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 
+// Styles and tablee
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -27,7 +28,55 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 
+//Web3
+import Web3 from 'web3';
+import { getAddressBalances } from 'eth-balance-checker/lib/web3';
+ 
+const FALLBACK_WEB3_PROVIDER = process.env.REACT_APP_NETWORK || 'http://0.0.0.0:8545';
 
+const getWeb3 = () => {
+  return new Promise((resolve, reject) => {
+    // Wait for loading completion to avoid race conditions with web3 injection timing.
+    window.addEventListener("load", async () => {
+      // Modern dapp browsers...
+      if (window.ethereum) {
+        const web3 = new Web3(window.ethereum);
+        try {
+          // Request account access if needed
+          await window.ethereum.enable();
+          // Acccounts now exposed
+          resolve(web3);
+        } catch (error) {
+          reject(error);
+        }
+      }
+      // Legacy dapp browsers...
+      else if (window.web3) {
+        // Use Mist/MetaMask's provider.
+        const web3 = window.web3;
+        console.log("Injected web3 detected.");
+        resolve(web3);
+      }
+      // Fallback to localhost; use dev console port by default...
+      else {
+        const provider = new Web3.providers.HttpProvider(
+          FALLBACK_WEB3_PROVIDER
+        );
+        const web3 = new Web3(provider);
+        console.log("No web3 instance injected, using Infura/Local web3.");
+        resolve(web3);
+      }
+    });
+  });
+}
+
+async function getEthereumAccounts() {
+  const web3 = await getWeb3();
+  // Use web3 to get the user's accounts.
+  const accounts = await web3.eth.getAccounts();
+  console.log(accounts)
+  return accounts || [];
+}
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -146,6 +195,20 @@ function App() {
   const classes = useStyles();
   var rowNumber = 0;
 
+  const Accounts= () => {
+    const [userData, setUserData] = useState()
+  
+    useEffect(() => {
+      getEthereumAccounts().then(data => {
+        data && setUserData(data)
+      })
+    }, []) // componentDidMount
+  
+    console.log(userData)
+    return <div/>
+  }
+
+
   const SelectReserveUSD = () => (
     <FormControl className={classes.formControl}>
     <InputLabel id="demo-simple-select-label">Liquidty USD &gt;</InputLabel>
@@ -209,11 +272,14 @@ function App() {
   return (
     <Container component="main" maxWidth="xl">
       <CssBaseline />
+
       <div className={classes.paper}>
       <Typography variant="h1" color="inherit" noWrap className={classes.toolbarTitle}>UNITRACK</Typography>
       
       <Typography className={classes.root}>
       <div>
+      <Accounts/>
+
       <SelectReserveUSD/>
       <SelectTxCount/>
       <SelectTimeStamp/>    
