@@ -205,13 +205,13 @@ function App() {
           </Select>          
     </FormControl>
   )
-
+  document.title = 'Degen Alpha'
   return (
     <Container component="main" maxWidth="xl">
       <CssBaseline />
 
       <div className={classes.paper}>
-      <Typography variant="h1" color="inherit" noWrap className={classes.toolbarTitle}>UNITRACK</Typography>
+      <Typography variant="h1" color="inherit" noWrap className={classes.toolbarTitle}>Degen Alpha</Typography>
       
       <Typography className={classes.root}>
       <div>
@@ -237,7 +237,7 @@ function App() {
         {
           newLoading
           ? 'Loading pairs data...'
-          :   
+          :(pairs.length?
           pairs.map(function(item, key) {
             
             var d = new Date(item.createdAtTimestamp * 1000);
@@ -248,7 +248,7 @@ function App() {
             
             formattedDate = formattedDate + " " + formattedTime;
             rowNumber++;
-
+            
             return (
                <TableRow key = {key}>
                    <TableCell>{rowNumber}</TableCell>
@@ -262,7 +262,7 @@ function App() {
                </TableRow>
              )          
           })
-        }
+          : 'No results for this query')}
         </TableBody>
         </Table>
 
