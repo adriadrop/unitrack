@@ -228,7 +228,7 @@ function App() {
           <StyledTableCell>Token 2 Uniswap/Etherscan</StyledTableCell>
           <StyledTableCell>Total TX count</StyledTableCell>
           <StyledTableCell>Volume USD</StyledTableCell>
-          <StyledTableCell>Current liquidty</StyledTableCell>
+          <StyledTableCell>Current liquidity</StyledTableCell>
           <StyledTableCell>Creation date</StyledTableCell>
           <StyledTableCell>Uniswap</StyledTableCell>
           </TableRow>
