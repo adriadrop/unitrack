@@ -104,7 +104,7 @@ export const numberFormat = (value) =>
 
 const NEW_PAIRS = gql `
   query pairs($reserveUSD: Int!, $timeStamp: Int!, $txCount: Int!){
-    pairs(where: {reserveUSD_gt: $reserveUSD, createdAtTimestamp_gt: $timeStamp, txCount_gt: $txCount} first: 500, 
+    pairs(where: {reserveUSD_gt: $reserveUSD, createdAtTimestamp_gt: $timeStamp, txCount_gt: $txCount} first: 100, 
     orderBy: createdAtTimestamp, orderDirection: desc) {
       id
       txCount
