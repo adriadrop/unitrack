@@ -27,6 +27,10 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
+import Box from '@material-ui/core/Box';
+
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -49,7 +53,7 @@ const StyledTableRow = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -60,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbarTitle: {
     flexGrow: 1,
+    marginBottom: theme.spacing(3),
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -69,9 +74,13 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   root: {
-    '& > * + *': {
-      marginLeft: theme.spacing(2),
+    '& > *': {
+      margin: theme.spacing(1),
     },
+  },
+  extendedButton: {
+    marginTop: theme.spacing(2),
+    marginRight: theme.spacing(1),
   },
   formControl: {
     margin: theme.spacing(1),
@@ -125,6 +134,14 @@ const NEW_PAIRS = gql `
  `
 
 function App() {
+
+  function handleClick(e) {
+        e.preventDefault();
+    
+        //const provider = await web3Modal.connect();
+        //const web3 = new Web3(provider);
+        console.log('The link was clicked.');
+  }    
 
   const [filtersState, setFilters] = useState({
     reserveState: 5000,
@@ -210,12 +227,15 @@ function App() {
     <Container component="main" maxWidth="xl">
       <CssBaseline />
 
+      <Box display="flex" justifyContent="flex-end" m={1} p={1} >
+      <Fab variant="extended" size="medium" color="primary"  className={classes.extendedButton}  onClick={handleClick}>
+        Connect
+      </Fab> 
+      </Box>
       <div className={classes.paper}>
       <Typography variant="h1" color="inherit" noWrap className={classes.toolbarTitle}>Degen Alpha</Typography>
-      
-      <Typography className={classes.root}>
-      <div>
 
+      <div className={classes.root}>
       <SelectReserveUSD/>
       <SelectTxCount/>
       <SelectTimeStamp/>    
@@ -267,8 +287,7 @@ function App() {
         </Table>
 
       </TableContainer>      
-      </div>  
-      </Typography>       
+      </div>       
       </div>
     </Container>
   )

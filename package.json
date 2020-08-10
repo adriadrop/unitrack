@@ -1,6 +1,6 @@
 {
-  "name": "uniswap-demo",
-  "version": "0.1.0",
+  "name": "unitrack",
+  "version": "0.9.0",
   "private": true,
   "dependencies": {
     "@apollo/react-hooks": "^4.0.0",
