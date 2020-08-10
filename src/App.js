@@ -148,7 +148,7 @@ function App() {
 
   const SelectReserveUSD = () => (
     <FormControl className={classes.formControl}>
-    <InputLabel id="demo-simple-select-label">Liquidty USD &gt;</InputLabel>
+    <InputLabel id="demo-simple-select-label">Liquidity USD &gt;</InputLabel>
     <Select     
       labelId="demo-simple-select-label"
       id="demo-simple-select"
