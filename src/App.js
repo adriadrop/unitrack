@@ -12,7 +12,7 @@ import {
   Switch,
   Route,
   Link
-} from "react-router-dom";
+} from 'react-router-dom';
 
 export const client = new ApolloClient({
   link: new HttpLink({

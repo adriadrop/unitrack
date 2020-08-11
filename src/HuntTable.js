@@ -17,6 +17,7 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import useSound from 'use-sound';
 import alarm from './sounds/alarm.mp3';
+import Alert from '@material-ui/lab/Alert';
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -62,6 +63,9 @@ const useStyles = makeStyles((theme) => ({
     '& > * + *': {
       marginLeft: theme.spacing(2),
     },
+  },
+  infoBottom: {
+    marginTop: theme.spacing(2),
   },
 }));
 
@@ -160,7 +164,7 @@ function HuntTable() {
       <Table className={classes.table} size="small" aria-label="a dense table">
       <TableHead>
           <TableRow>
-          <StyledTableCell></StyledTableCell>
+          <StyledTableCell>20/5</StyledTableCell>
           <StyledTableCell>Token 1 Uniswap/Etherscan</StyledTableCell>
           <StyledTableCell>Token 2 Uniswap/Etherscan</StyledTableCell>
           <StyledTableCell>TX count</StyledTableCell>
@@ -207,7 +211,7 @@ function HuntTable() {
       <Table className={classes.table} size="small" aria-label="a dense table">
       <TableHead>
           <TableRow>
-          <StyledTableCell></StyledTableCell>
+          <StyledTableCell>50/15</StyledTableCell>
           <StyledTableCell>Token 1 Uniswap/Etherscan</StyledTableCell>
           <StyledTableCell>Token 2 Uniswap/Etherscan</StyledTableCell>
           <StyledTableCell>TX count</StyledTableCell>
@@ -254,7 +258,7 @@ function HuntTable() {
         <Table className={classes.table} size="small" aria-label="a dense table">
       <TableHead>
           <TableRow>
-          <StyledTableCell></StyledTableCell>
+          <StyledTableCell>100/60</StyledTableCell>
           <StyledTableCell>Token 1 Uniswap/Etherscan</StyledTableCell>
           <StyledTableCell>Token 2 Uniswap/Etherscan</StyledTableCell>
           <StyledTableCell>TX count</StyledTableCell>
@@ -301,7 +305,7 @@ function HuntTable() {
         <Table className={classes.table} size="small" aria-label="a dense table">
       <TableHead>
           <TableRow>
-          <StyledTableCell></StyledTableCell>
+          <StyledTableCell>300/120</StyledTableCell>
           <StyledTableCell>Token 1 Uniswap/Etherscan</StyledTableCell>
           <StyledTableCell>Token 2 Uniswap/Etherscan</StyledTableCell>
           <StyledTableCell>TX count</StyledTableCell>
@@ -345,8 +349,9 @@ function HuntTable() {
         </TableBody>
         </Table>
 
-      </TableContainer>      
+      </TableContainer>  
         </div>   
+        <Alert severity="info" className={classes.infoBottom}>20/5 means 20 trx in first 5 minutes, 50/15 means 50 trx in 15 minutes etc</Alert>  
       </div>
     </Container>
   )
