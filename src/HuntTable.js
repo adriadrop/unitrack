@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
@@ -102,13 +102,42 @@ const NEW_PAIRS = gql `
   }
  `
 
-function HuntTable(props) {
+ // from https://overreacted.io/making-setinterval-declarative-with-react-hooks/
+ function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
+
+function HuntTable() {
 
   // 20 under first 5 minutes
   // 25 under 10 minutes
   // 50 under 15 minutes
   // 100 under 30 minutes
   // 100 under 60 minutes
+
+
+  let [count, setCount] = useState(0);
+
+  useInterval(() => {
+    // Your custom logic here
+    setCount(count + 1);
+  }, 5000);
 
   const { loading: newLoading5, data: data5 } = useQuery(NEW_PAIRS, {
     variables: {
@@ -353,7 +382,8 @@ function HuntTable(props) {
 
       </TableContainer>  
         </div>   
-        <Alert severity="info" className={classes.infoBottom}>20/5 means 20 trx in first 5 minutes, 50/15 means 50 trx in 15 minutes, 100/60 means 100 trx in 1 hour, 300/120 means 300 trx in 2 hours</Alert>  
+        <Alert severity="info" className={classes.infoBottom}>20/5 means 20 trx in first 5 minutes after uniswap listing, 50/15 means 50 trx in 15 minutes, 100/60 means 100 trx in 1 hour, 300/120 means 300 trx in 2 hours</Alert>  
+        <Alert severity="warning" className={classes.infoBottom}>Page is refreshed every 14 seconds (or one eth block)</Alert>        
       </div>
     </Container>
   )

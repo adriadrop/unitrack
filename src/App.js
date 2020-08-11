@@ -7,6 +7,11 @@ import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { HttpLink } from 'apollo-link-http'
 
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -25,8 +30,45 @@ export const client = new ApolloClient({
 })
 
 
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  root: {
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    },
+  },
+  menuTop: {
+    marginTop: theme.spacing(2),
+    marginLeft: theme.spacing(2),
+  },
+}));
+
 
 function App() {
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+
 
   function Home() {
     return (
@@ -36,24 +78,30 @@ function App() {
     );
   }
   
+  const classes = useStyles();
+
   document.title = 'Degen Alpha'
   return (
 
     <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/filter">Filter</Link>
-          </li>
-          <li>
-            <Link to="/hunt">Hunt</Link>
-          </li>          
-        </ul>
+      <div className={classes.menuTop}>
+      <Button     
+        variant="contained" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+        Open Menu
+      </Button>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose} component={Link} to="/">Home</MenuItem>
+        <MenuItem onClick={handleClose} component={Link} to="/filter">Filter</MenuItem>
+        <MenuItem onClick={handleClose} component={Link} to="/hunt">Hunt</MenuItem>
+      </Menu>
 
-        <hr />
+
 
         {/*
           A <Switch> looks through all its children <Route>
