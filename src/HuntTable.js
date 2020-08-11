@@ -137,7 +137,7 @@ function HuntTable() {
   useInterval(() => {
     // Your custom logic here
     setCount(count + 1);
-  }, 5000);
+  }, 14000);
 
   const { loading: newLoading5, data: data5 } = useQuery(NEW_PAIRS, {
     variables: {
