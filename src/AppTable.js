@@ -214,11 +214,6 @@ function AppTable() {
     <Container component="main" maxWidth="xl">
       <CssBaseline />
 
-      <Box display="flex" justifyContent="flex-end" m={1} p={1} >
-      <Fab variant="extended" size="medium" color="primary"  className={classes.extendedButton}  onClick={handleClick}>
-        Connect
-      </Fab> 
-      </Box>
       <div className={classes.paper}>
       <Typography variant="h1" color="inherit" noWrap className={classes.toolbarTitle}>Degen Alpha</Typography>
 
