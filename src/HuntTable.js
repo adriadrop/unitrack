@@ -102,7 +102,7 @@ const NEW_PAIRS = gql `
   }
  `
 
-function HuntTable() {
+function HuntTable(props) {
 
   // 20 under first 5 minutes
   // 25 under 10 minutes
@@ -178,7 +178,7 @@ function HuntTable() {
         {
           newLoading5
           ? 'Loading pairs data...'
-          :   
+          : (pairs5.length?  
           pairs5.map(function(item, key) {
             
             var d = new Date(item.createdAtTimestamp * 1000);
@@ -202,8 +202,8 @@ function HuntTable() {
                    <TableCell><Link href= {"https://uniswap.info/pair/" + item.id} target="_blank" variant="body2">View pair</Link></TableCell> 
                </TableRow>
              )
-          
           })
+          : 'No results for this hunt')
         }
         </TableBody>
         </Table>
@@ -225,7 +225,7 @@ function HuntTable() {
         {
           newLoading50
           ? 'Loading pairs data...'
-          :   
+          : (pairs50.length?  
           pairs50.map(function(item, key) {
             
             var d = new Date(item.createdAtTimestamp * 1000);
@@ -249,8 +249,8 @@ function HuntTable() {
                    <TableCell><Link href= {"https://uniswap.info/pair/" + item.id} target="_blank" variant="body2">View pair</Link></TableCell> 
                </TableRow>
              )
-          
           })
+          : 'No results for this hunt')
         }
         </TableBody>
         </Table>
@@ -272,7 +272,7 @@ function HuntTable() {
         {
           newLoading100
           ? 'Loading pairs data...'
-          :   
+          : (pairs100.length?  
           pairs100.map(function(item, key) {
             
             var d = new Date(item.createdAtTimestamp * 1000);
@@ -298,6 +298,7 @@ function HuntTable() {
              )
           
           })
+          : 'No results for this hunt')
         }
         </TableBody>
         </Table>
@@ -319,7 +320,7 @@ function HuntTable() {
         {
           newLoading200
           ? 'Loading pairs data...'
-          :   
+          : (pairs200.length?  
           pairs200.map(function(item, key) {
             
             var d = new Date(item.createdAtTimestamp * 1000);
@@ -345,13 +346,14 @@ function HuntTable() {
              )
           
           })
+          : 'No results for this hunt')
         }
         </TableBody>
         </Table>
 
       </TableContainer>  
         </div>   
-        <Alert severity="info" className={classes.infoBottom}>20/5 means 20 trx in first 5 minutes, 50/15 means 50 trx in 15 minutes etc</Alert>  
+        <Alert severity="info" className={classes.infoBottom}>20/5 means 20 trx in first 5 minutes, 50/15 means 50 trx in 15 minutes, 100/60 means 100 trx in 1 hour, 300/120 means 300 trx in 2 hours</Alert>  
       </div>
     </Container>
   )

@@ -46,7 +46,7 @@ function App() {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/app">Overview</Link>
+            <Link to="/filter">Filter</Link>
           </li>
           <li>
             <Link to="/hunt">Hunt</Link>
@@ -69,7 +69,7 @@ function App() {
           <Route path="/hunt">
             <HuntTable />
           </Route>
-          <Route path="/app">
+          <Route path="/filter">
             <AppTable />
           </Route>
         </Switch>
