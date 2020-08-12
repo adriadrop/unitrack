@@ -122,7 +122,7 @@ function App() {
   };
 
 
-  document.title = 'Degen Alpha'
+  document.title = 'Alpha Degen'
   return (
 
     <Router>

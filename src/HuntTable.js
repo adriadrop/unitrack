@@ -189,7 +189,7 @@ function HuntTable() {
     <Container component="main" maxWidth="xl">
       <CssBaseline />
       <div className={classes.paper}>
-      <Typography variant="h1" color="inherit" noWrap className={classes.toolbarTitle}>Degen Alpha Hunt</Typography>
+      <Typography variant="h1" color="inherit" noWrap className={classes.toolbarTitle}>Alpha Degen Hunt</Typography>
 
       <div className={classes.root}>
       <TableContainer component={Paper}>
