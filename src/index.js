@@ -6,16 +6,22 @@ import './index.css'
 import { ApolloProvider } from 'react-apollo'
 import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
 import { client } from './App'
+import { Auth0Provider } from "@auth0/auth0-react";
 
 ReactDOM.render(
 
+  <Auth0Provider
+    domain="degen.eu.auth0.com"
+    clientId="3ePPEJuiudaKvXbj446Dpdpp06QkAtIm"
+    redirectUri={window.location.origin}
+  >
 <ApolloProvider client={client}>
   <ApolloHooksProvider client={client}>
     <App />
   </ApolloHooksProvider>
-</ApolloProvider>,
+</ApolloProvider>
+</Auth0Provider>,
   document.getElementById('root')
 )
-// reloade window for new info
-//setTimeout(function () {  window.location.reload(1); }, 55000);
+
 serviceWorker.register();

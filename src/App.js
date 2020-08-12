@@ -2,6 +2,8 @@ import React, {} from 'react'
 import './App.css'
 import AppTable from './AppTable'
 import HuntTable from './HuntTable'
+import Home from './Home'
+import Profile from './Profile'
 
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
@@ -11,6 +13,7 @@ import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+import { useAuth0 } from "@auth0/auth0-react";
 
 import {
   BrowserRouter as Router,
@@ -29,6 +32,22 @@ export const client = new ApolloClient({
   cache: new InMemoryCache()
 })
 
+const LogoutButton = () => {
+  const { logout } = useAuth0();
+  return (
+    <Button
+      onClick={() =>
+        logout({
+          returnTo: window.location.origin,
+        })
+      }
+      variant="danger"
+      className="btn-margin"
+    >
+      Log Out
+    </Button>
+  );
+};
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -68,17 +87,40 @@ function App() {
     setAnchorEl(null);
   };
 
-
-
-  function Home() {
-    return (
-      <div>
-        <h2>Degen Alpha Home</h2>
-      </div>
-    );
-  }
-  
   const classes = useStyles();
+
+
+  const { isAuthenticated } = useAuth0();
+
+  const LoginButton = () => {
+    const { loginWithRedirect } = useAuth0();
+    return (
+      <MenuItem
+        onClick={() => loginWithRedirect()}
+        variant="contained" color="primary">
+        Log In
+      </MenuItem>
+    );
+  };
+
+  const LogoutButton = () => {
+    const { logout } = useAuth0();
+    return (
+      <MenuItem
+        onClick={() => logout({returnTo: window.location.origin,})}
+        variant="contained" color="primary">
+        Log Out
+      </MenuItem>
+    );
+  };
+
+  const ProfileItem = () => {
+    const { logout } = useAuth0();
+    return (
+      <MenuItem onClick={handleClose} component={Link} to="/profile">Profile</MenuItem>  
+    );
+  };
+
 
   document.title = 'Degen Alpha'
   return (
@@ -99,9 +141,10 @@ function App() {
         <MenuItem onClick={handleClose} component={Link} to="/">Home</MenuItem>
         <MenuItem onClick={handleClose} component={Link} to="/filter">Filter</MenuItem>
         <MenuItem onClick={handleClose} component={Link} to="/hunt">Hunt</MenuItem>
+        
+        {isAuthenticated ? <ProfileItem />: "" } 
+        {isAuthenticated ? <LogoutButton /> : <LoginButton />}  
       </Menu>
-
-
 
         {/*
           A <Switch> looks through all its children <Route>
@@ -120,6 +163,9 @@ function App() {
           <Route path="/filter">
             <AppTable />
           </Route>
+          <Route path="/profile">
+            <Profile />
+          </Route>          
         </Switch>
       </div>
     </Router>

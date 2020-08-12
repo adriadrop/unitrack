@@ -16,8 +16,11 @@ import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import useSound from 'use-sound';
-import alarm from './sounds/alarm.mp3';
+import alarm from './media/alarm.mp3';
 import Alert from '@material-ui/lab/Alert';
+
+import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react"
+import Loading from './Loading'
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -389,4 +392,6 @@ function HuntTable() {
   )
 }
 
-export default HuntTable
+export default withAuthenticationRequired(HuntTable, {
+  onRedirecting: () => <Loading />,
+});

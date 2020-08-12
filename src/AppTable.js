@@ -18,8 +18,8 @@ import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import useSound from 'use-sound';
-import alarm from './sounds/alarm.mp3';
-//import Select from 'react-select';
+import alarm from './media/alarm.mp3';
+
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -27,6 +27,8 @@ import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Fab from '@material-ui/core/Fab';
 import Box from '@material-ui/core/Box';
+import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react"
+import Loading from './Loading'
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -136,7 +138,7 @@ function AppTable() {
     txCountState: 100,
   });
 
-  const { loading: newLoading, data: data } = useQuery(NEW_PAIRS, {
+  const { loading, data } = useQuery(NEW_PAIRS, {
     variables: {
       reserveUSD: filtersState.reserveState,
       txCount: filtersState.txCountState,
@@ -237,7 +239,7 @@ function AppTable() {
         </TableHead>
         <TableBody>
         {
-          newLoading
+          loading
           ? 'Loading pairs data...'
           :(pairs.length?
           pairs.map(function(item, key) {
@@ -275,4 +277,7 @@ function AppTable() {
   )
 }
 
-export default AppTable
+
+export default withAuthenticationRequired(AppTable, {
+  onRedirecting: () => <Loading />,
+});
