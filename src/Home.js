@@ -78,7 +78,7 @@ const LoginButton = () => {
       <div className={classes.root}>
       <img height="500" src={chad} alt="chad" />
       <br />  
-      <strong>How does it work? Check <a href="">this video</a></strong>
+      <strong>How does it work? Check <a href="https://youtu.be/QHFLqe5kMDI" target="_blank">this video</a></strong>
       <br />  
       <br />  
       </div>
