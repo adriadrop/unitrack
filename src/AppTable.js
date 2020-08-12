@@ -25,10 +25,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
-import Fab from '@material-ui/core/Fab';
-import Box from '@material-ui/core/Box';
-import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react"
-import Loading from './Loading'
+import Alert from '@material-ui/lab/Alert';
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -86,6 +83,10 @@ const useStyles = makeStyles((theme) => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
+  },
+  infoBottom: {
+    marginTop: theme.spacing(2),
+    width: '50%', 
   },
 }));
 
@@ -270,7 +271,8 @@ function AppTable() {
         </TableBody>
         </Table>
 
-      </TableContainer>      
+      </TableContainer>     
+      <Alert severity="success" className={classes.infoBottom}>Donate if helpful 0x777a7dC0c7CC331ac0D8A99f723F547EBCC7B366</Alert>   
       </div>       
       </div>
     </Container>
@@ -278,6 +280,4 @@ function AppTable() {
 }
 
 
-export default withAuthenticationRequired(AppTable, {
-  onRedirecting: () => <Loading />,
-});
+export default AppTable

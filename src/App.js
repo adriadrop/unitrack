@@ -13,7 +13,6 @@ import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
-import { useAuth0 } from "@auth0/auth0-react";
 
 import {
   BrowserRouter as Router,
@@ -32,22 +31,7 @@ export const client = new ApolloClient({
   cache: new InMemoryCache()
 })
 
-const LogoutButton = () => {
-  const { logout } = useAuth0();
-  return (
-    <Button
-      onClick={() =>
-        logout({
-          returnTo: window.location.origin,
-        })
-      }
-      variant="danger"
-      className="btn-margin"
-    >
-      Log Out
-    </Button>
-  );
-};
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -90,38 +74,6 @@ function App() {
   const classes = useStyles();
 
 
-  const { isAuthenticated } = useAuth0();
-
-  const LoginButton = () => {
-    const { loginWithRedirect } = useAuth0();
-    return (
-      <MenuItem
-        onClick={() => loginWithRedirect()}
-        variant="contained" color="primary">
-        Log In
-      </MenuItem>
-    );
-  };
-
-  const LogoutButton = () => {
-    const { logout } = useAuth0();
-    return (
-      <MenuItem
-        onClick={() => logout({returnTo: window.location.origin,})}
-        variant="contained" color="primary">
-        Log Out
-      </MenuItem>
-    );
-  };
-
-  const ProfileItem = () => {
-    const { logout } = useAuth0();
-    return (
-      <MenuItem onClick={handleClose} component={Link} to="/profile">Profile</MenuItem>  
-    );
-  };
-
-
   document.title = 'Alpha Degen'
   return (
 
@@ -142,8 +94,6 @@ function App() {
         <MenuItem onClick={handleClose} component={Link} to="/filter">Filter</MenuItem>
         <MenuItem onClick={handleClose} component={Link} to="/hunt">Hunt</MenuItem>
         
-        {isAuthenticated ? <ProfileItem />: "" } 
-        {isAuthenticated ? <LogoutButton /> : <LoginButton />}  
       </Menu>
 
         {/*
