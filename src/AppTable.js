@@ -98,6 +98,14 @@ export const numberFormat = (value) =>
   }).format(value);
 
 
+  // Fetch ETH price for further calculations
+  var priceEth = 0;
+  fetch('https://api.etherscan.io/api?module=stats&action=ethprice&apikey=15K8UEKJJ7XNPEIBESJ9BUVQI7R76ASHIK')
+  .then(response => response.json())
+  .then(data=> {priceEth = data.result.ethusd; });
+
+
+
 // Graph https://thegraph.com/docs/graphql-api#queries
 // Uniswap queries https://uniswap.org/docs/v2/API/queries/
 
@@ -114,10 +122,12 @@ const NEW_PAIRS = gql `
     token0 {
       name
       id
+      derivedETH
     }
     token1 {
       name
       id
+      derivedETH
     }
     }
   }
@@ -135,7 +145,7 @@ function AppTable() {
 
   const [filtersState, setFilters] = useState({
     reserveState: 5000,
-    timeStampState: 31536000,  // 1 year   should be 20.5.2020 since this is uniswap 2 launch date
+    timeStampState: 604800,  // 1 year   should be 20.5.2020 since this is uniswap 2 launch date
     txCountState: 100,
   });
 
@@ -235,6 +245,7 @@ function AppTable() {
           <StyledTableCell>Volume USD</StyledTableCell>
           <StyledTableCell>Current liquidity</StyledTableCell>
           <StyledTableCell>Creation date</StyledTableCell>
+          <StyledTableCell>Price T1/T2</StyledTableCell>
           <StyledTableCell>Uniswap</StyledTableCell>
           </TableRow>
         </TableHead>
@@ -262,7 +273,8 @@ function AppTable() {
                    <TableCell>{item.txCount}</TableCell>
                    <TableCell>{numberFormat(item.volumeUSD)}</TableCell>
                    <TableCell>{numberFormat(item.reserveUSD)}</TableCell>
-                   <TableCell>{formattedDate}</TableCell>                  
+                   <TableCell>{formattedDate}</TableCell>    
+                   <TableCell>{numberFormat(priceEth * item.token0.derivedETH) + " / " + numberFormat(priceEth * item.token1.derivedETH)}</TableCell>                                     
                    <TableCell><Link href= {"https://uniswap.info/pair/" + item.id} target="_blank" variant="body2">View pair</Link></TableCell> 
                </TableRow>
              )          

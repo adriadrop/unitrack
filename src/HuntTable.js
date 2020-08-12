@@ -86,6 +86,12 @@ export const numberFormat = (value) =>
   }).format(value);
 
 
+  // Fetch ETH price for further calculations
+  var priceEth = 0;
+  fetch('https://api.etherscan.io/api?module=stats&action=ethprice&apikey=15K8UEKJJ7XNPEIBESJ9BUVQI7R76ASHIK')
+  .then(response => response.json())
+  .then(data=> {priceEth = data.result.ethusd; });  
+
 // Graph https://thegraph.com/docs/graphql-api#queries
 // Uniswap queries https://uniswap.org/docs/v2/API/queries/
 
@@ -209,6 +215,7 @@ function HuntTable() {
           <StyledTableCell>Volume USD</StyledTableCell>
           <StyledTableCell>Current liquidty</StyledTableCell>
           <StyledTableCell>Creation date</StyledTableCell>
+          <StyledTableCell>Price T1/T2</StyledTableCell>          
           <StyledTableCell>Uniswap</StyledTableCell>
           </TableRow>
         </TableHead>
@@ -236,6 +243,7 @@ function HuntTable() {
                    <TableCell>{item.txCount}</TableCell>
                    <TableCell>{numberFormat(item.volumeUSD)}</TableCell>
                    <TableCell>{numberFormat(item.reserveUSD)}</TableCell>
+                   <TableCell>{numberFormat(priceEth * item.token0.derivedETH) + " / " + numberFormat(priceEth * item.token1.derivedETH)}</TableCell>                      
                    <TableCell>{formattedDate}</TableCell>                  
                    <TableCell><Link href= {"https://uniswap.info/pair/" + item.id} target="_blank" variant="body2">View pair</Link></TableCell> 
                </TableRow>
@@ -256,6 +264,7 @@ function HuntTable() {
           <StyledTableCell>Volume USD</StyledTableCell>
           <StyledTableCell>Current liquidty</StyledTableCell>
           <StyledTableCell>Creation date</StyledTableCell>
+          <StyledTableCell>Price T1/T2</StyledTableCell>          
           <StyledTableCell>Uniswap</StyledTableCell>
           </TableRow>
         </TableHead>
@@ -283,6 +292,7 @@ function HuntTable() {
                    <TableCell>{item.txCount}</TableCell>
                    <TableCell>{numberFormat(item.volumeUSD)}</TableCell>
                    <TableCell>{numberFormat(item.reserveUSD)}</TableCell>
+                   <TableCell>{numberFormat(priceEth * item.token0.derivedETH) + " / " + numberFormat(priceEth * item.token1.derivedETH)}</TableCell>                      
                    <TableCell>{formattedDate}</TableCell>                  
                    <TableCell><Link href= {"https://uniswap.info/pair/" + item.id} target="_blank" variant="body2">View pair</Link></TableCell> 
                </TableRow>
@@ -303,6 +313,7 @@ function HuntTable() {
           <StyledTableCell>Volume USD</StyledTableCell>
           <StyledTableCell>Current liquidty</StyledTableCell>
           <StyledTableCell>Creation date</StyledTableCell>
+          <StyledTableCell>Price T1/T2</StyledTableCell>          
           <StyledTableCell>Uniswap</StyledTableCell>
           </TableRow>
         </TableHead>
@@ -330,6 +341,7 @@ function HuntTable() {
                    <TableCell>{item.txCount}</TableCell>
                    <TableCell>{numberFormat(item.volumeUSD)}</TableCell>
                    <TableCell>{numberFormat(item.reserveUSD)}</TableCell>
+                   <TableCell>{numberFormat(priceEth * item.token0.derivedETH) + " / " + numberFormat(priceEth * item.token1.derivedETH)}</TableCell>                      
                    <TableCell>{formattedDate}</TableCell>                  
                    <TableCell><Link href= {"https://uniswap.info/pair/" + item.id} target="_blank" variant="body2">View pair</Link></TableCell> 
                </TableRow>
@@ -351,6 +363,7 @@ function HuntTable() {
           <StyledTableCell>Volume USD</StyledTableCell>
           <StyledTableCell>Current liquidty</StyledTableCell>
           <StyledTableCell>Creation date</StyledTableCell>
+          <StyledTableCell>Price T1/T2</StyledTableCell>          
           <StyledTableCell>Uniswap</StyledTableCell>
           </TableRow>
         </TableHead>
@@ -378,6 +391,7 @@ function HuntTable() {
                    <TableCell>{item.txCount}</TableCell>
                    <TableCell>{numberFormat(item.volumeUSD)}</TableCell>
                    <TableCell>{numberFormat(item.reserveUSD)}</TableCell>
+                   <TableCell>{numberFormat(priceEth * item.token0.derivedETH) + " / " + numberFormat(priceEth * item.token1.derivedETH)}</TableCell>                      
                    <TableCell>{formattedDate}</TableCell>                  
                    <TableCell><Link href= {"https://uniswap.info/pair/" + item.id} target="_blank" variant="body2">View pair</Link></TableCell> 
                </TableRow>
