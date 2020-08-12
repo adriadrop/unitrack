@@ -86,7 +86,7 @@ const LoginButton = () => {
       </div>
       <div className={classes.root}>
       Use special promotion price of <strong>0.1 ETH</strong>, in a week price will be <strong>double</strong>.<br /> 
-      Send 0.1 ETH to this address 0x9A7c90967915d8FB37BcA77F21a0878a2694EAB8, fill out <a href="https://docs.google.com/forms/d/199Dsxbk1OHdoyo3xxsrA-5oJ9PEkYtp6pbM7U428EiU" target="_blank">ggl form </a>with your email and trx so that your account is approved
+      Send 0.1 ETH to this address 0x777a7dC0c7CC331ac0D8A99f723F547EBCC7B366, fill out <a href="https://docs.google.com/forms/d/199Dsxbk1OHdoyo3xxsrA-5oJ9PEkYtp6pbM7U428EiU" target="_blank">ggl form </a>with your email and trx so that your account is approved
       <br />     
       For other info check telegram: <a href="https://t.me/alphadegen">LINK</a>
       </div>
