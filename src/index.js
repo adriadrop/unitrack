@@ -7,6 +7,10 @@ import { ApolloProvider } from 'react-apollo'
 import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks'
 import { client } from './App'
 
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-175331036-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
+
 ReactDOM.render(
 
 <ApolloProvider client={client}>
