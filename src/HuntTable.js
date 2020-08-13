@@ -202,7 +202,7 @@ function HuntTable() {
       <CssBaseline />
       <div className={classes.paper}>
       <Typography variant="h1" color="inherit" noWrap className={classes.toolbarTitle}>Alpha Degen Hunt</Typography>
-      <Alert severity="info" className={classes.infoTop}>What does this page do? It searches uniswap for newly listed GEMS and displays them in grouped trajectories. 20/5 means 20 trx in first 5 minutes after uniswap listing, 50/15 means 50 trx in 15 minutes, 100/60 means 100 trx in 1 hour, 300/120 means 300 trx in 2 hours</Alert> 
+      <Alert severity="info" className={classes.infoTop}>What does this page do? It searches uniswap for newly listed GEMS and displays them in grouped trajectories. 20/5 means higher than 20 trx in first 5 minutes after uniswap listing, 50/15 means higher than 50 trx in 15 minutes, 100/60 means higher than 100 trx in 1 hour, 300/120 means hihger than 300 trx in 2 hours</Alert> 
       <div className={classes.root}>
       <TableContainer component={Paper}>
       <Table className={classes.table} size="small" aria-label="a dense table">
