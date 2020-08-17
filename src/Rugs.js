@@ -144,7 +144,7 @@ function AppTable() {
   }    
 
   const [filtersState, setFilters] = useState({
-    reserveState: 1,
+    reserveState: 10,
     timeStampState: 604800,  // 1 year   should be 20.5.2020 since this is uniswap 2 launch date
     txCountState: 100,
   });

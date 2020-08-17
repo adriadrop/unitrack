@@ -3,7 +3,7 @@ import './App.css'
 import AppTable from './AppTable'
 import HuntTable from './HuntTable'
 import Home from './Home'
-import Profile from './Profile'
+import Rugs from './Rugs'
 
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
@@ -115,7 +115,7 @@ function App() {
             <HuntTable />
           </Route>
           <Route path="/rugs">
-            <Profile />
+            <Rugs />
           </Route>                    
         </Switch>
       </div>
