@@ -228,7 +228,7 @@ function AppTable() {
       <CssBaseline />
 
       <div className={classes.paper}>
-      <Typography variant="h1" color="inherit" noWrap className={classes.toolbarTitle}>Alpha Degen</Typography>
+      <Typography variant="h1" color="inherit" noWrap className={classes.toolbarTitle}>Filter all projects</Typography>
 
       <div className={classes.root}>
       <SelectReserveUSD/>

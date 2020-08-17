@@ -91,8 +91,9 @@ function App() {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose} component={Link} to="/">Home</MenuItem>
-        <MenuItem onClick={handleClose} component={Link} to="/filter">Filter</MenuItem>
-        <MenuItem onClick={handleClose} component={Link} to="/hunt">Hunt</MenuItem>
+        <MenuItem onClick={handleClose} component={Link} to="/filter">All projects</MenuItem>
+        <MenuItem onClick={handleClose} component={Link} to="/hunt">New</MenuItem>
+        <MenuItem onClick={handleClose} component={Link} to="/rugs">Rugs</MenuItem>
         
       </Menu>
 
@@ -107,15 +108,15 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
+          <Route path="/filter">
+            <AppTable />
+          </Route>           
           <Route path="/hunt">
             <HuntTable />
           </Route>
-          <Route path="/filter">
-            <AppTable />
-          </Route>
-          <Route path="/profile">
+          <Route path="/rugs">
             <Profile />
-          </Route>          
+          </Route>                    
         </Switch>
       </div>
     </Router>
