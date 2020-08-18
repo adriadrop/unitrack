@@ -49,8 +49,6 @@ const StyledTableRow = withStyles((theme) => ({
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(2),
-    display: 'flex',
-    flexDirection: 'column',
     alignItems: 'center',
   },
   avatar: {
@@ -224,12 +222,12 @@ function AppTable() {
   )
 
   return (
-    <Grid container spacing={3} direction="row" alignItems="center" >
-      <Grid item xl={12}>
+    <Grid container spacing={3} direction="row"  direction="column" justify="center"alignItems="center">
+      <Grid item xl={10} xs={12}>
       <CssBaseline />
 
       <div className={classes.paper}>
-      <Typography variant="h1" color="inherit" noWrap className={classes.toolbarTitle}>Filter all projects</Typography>
+      <Typography variant="h1" color="inherit" className={classes.toolbarTitle}>Filter all projects</Typography>
 
       <div className={classes.root}>
       <SelectReserveUSD/>

@@ -44,9 +44,7 @@ const StyledTableRow = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
+    marginTop: theme.spacing(2),
     alignItems: 'center',
   },
   avatar: {
@@ -76,7 +74,6 @@ const useStyles = makeStyles((theme) => ({
   infoTop: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
-    width: '50%', 
   },
 }));
 
@@ -200,11 +197,11 @@ function HuntTable() {
   var rowNumber = 0;
 
   return (
-    <Grid container spacing={3} direction="row" alignItems="center" >
-      <Grid item xl={12}>
+    <Grid container spacing={3} direction="row"  direction="column" justify="center"alignItems="center">
+      <Grid item xl={10} xs={12}>
       <CssBaseline />
       <div className={classes.paper}>
-      <Typography variant="h1" color="inherit" noWrap className={classes.toolbarTitle}>Hunt for Gems</Typography>
+      <Typography variant="h1" color="inherit" className={classes.toolbarTitle}>Hunt for Gems</Typography>
       <Alert severity="info" className={classes.infoTop}>What does this page do? It searches uniswap for newly listed GEMS and displays them in grouped trajectories. 20/5 means higher than 20 trx in first 5 minutes after uniswap listing, 50/15 means higher than 50 trx in 15 minutes, 100/60 means higher than 100 trx in 1 hour, 300/120 means hihger than 300 trx in 2 hours</Alert> 
       <div className={classes.root}>
       <TableContainer component={Paper}>
