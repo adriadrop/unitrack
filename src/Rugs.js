@@ -205,7 +205,7 @@ function AppTable() {
   )
 
   return (
-    <Grid container spacing={3} direction="row"  direction="column" justify="center"alignItems="center">
+    <Grid container spacing={3} direction="row"  direction="column" justify="center" alignItems="center">
       <Grid item xl={10} xs={12}>
       <CssBaseline />
 

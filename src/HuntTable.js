@@ -90,6 +90,8 @@ export const numberFormat = (value) =>
   fetch('https://api.etherscan.io/api?module=stats&action=ethprice&apikey=15K8UEKJJ7XNPEIBESJ9BUVQI7R76ASHIK')
   .then(response => response.json())
   .then(data=> {priceEth = data.result.ethusd; });  
+  
+ 
 
 // Graph https://thegraph.com/docs/graphql-api#queries
 // Uniswap queries https://uniswap.org/docs/v2/API/queries/
@@ -197,7 +199,7 @@ function HuntTable() {
   var rowNumber = 0;
 
   return (
-    <Grid container spacing={3} direction="row"  direction="column" justify="center"alignItems="center">
+    <Grid container spacing={3} direction="row"  direction="column" justify="center" alignItems="center">
       <Grid item xl={10} xs={12}>
       <CssBaseline />
       <div className={classes.paper}>
@@ -237,14 +239,14 @@ function HuntTable() {
 
             return (
                <TableRow key = {key}>
-                    <TableCell>{rowNumber}</TableCell>
+                   <TableCell>{rowNumber}</TableCell>
                    <TableCell>{item.token0.name} <Link href= {"https://uniswap.info/token/" + item.token0.id} target="_blank" variant="body2">1</Link>  <Link href= {"https://etherscan.io/address/" + item.token0.id} target="_blank">2</Link></TableCell>  
                    <TableCell>{item.token1.name} <Link href= {"https://uniswap.info/token/" + item.token1.id} target="_blank" variant="body2">1</Link>  <Link href= {"https://etherscan.io/address/" + item.token1.id} target="_blank">2</Link></TableCell>                  
                    <TableCell>{item.txCount}</TableCell>
                    <TableCell>{numberFormat(item.volumeUSD)}</TableCell>
                    <TableCell>{numberFormat(item.reserveUSD)}</TableCell>
-                   <TableCell>{numberFormat(priceEth * item.token0.derivedETH) + " / " + numberFormat(priceEth * item.token1.derivedETH)}</TableCell>                      
-                   <TableCell>{formattedDate}</TableCell>                  
+                   <TableCell>{formattedDate}</TableCell>    
+                   <TableCell>{numberFormat(priceEth * item.token0.derivedETH) + " / " + numberFormat(priceEth * item.token1.derivedETH)}</TableCell>                 
                    <TableCell><Link href= {"https://uniswap.info/pair/" + item.id} target="_blank" variant="body2">View pair</Link></TableCell> 
                </TableRow>
              )
@@ -292,8 +294,8 @@ function HuntTable() {
                    <TableCell>{item.txCount}</TableCell>
                    <TableCell>{numberFormat(item.volumeUSD)}</TableCell>
                    <TableCell>{numberFormat(item.reserveUSD)}</TableCell>
-                   <TableCell>{numberFormat(priceEth * item.token0.derivedETH) + " / " + numberFormat(priceEth * item.token1.derivedETH)}</TableCell>                      
-                   <TableCell>{formattedDate}</TableCell>                  
+                   <TableCell>{formattedDate}</TableCell>    
+                   <TableCell>{numberFormat(priceEth * item.token0.derivedETH) + " / " + numberFormat(priceEth * item.token1.derivedETH)}</TableCell>                 
                    <TableCell><Link href= {"https://uniswap.info/pair/" + item.id} target="_blank" variant="body2">View pair</Link></TableCell> 
                </TableRow>
              )
@@ -341,8 +343,8 @@ function HuntTable() {
                    <TableCell>{item.txCount}</TableCell>
                    <TableCell>{numberFormat(item.volumeUSD)}</TableCell>
                    <TableCell>{numberFormat(item.reserveUSD)}</TableCell>
-                   <TableCell>{numberFormat(priceEth * item.token0.derivedETH) + " / " + numberFormat(priceEth * item.token1.derivedETH)}</TableCell>                      
-                   <TableCell>{formattedDate}</TableCell>                  
+                   <TableCell>{formattedDate}</TableCell>    
+                   <TableCell>{numberFormat(priceEth * item.token0.derivedETH) + " / " + numberFormat(priceEth * item.token1.derivedETH)}</TableCell>                  
                    <TableCell><Link href= {"https://uniswap.info/pair/" + item.id} target="_blank" variant="body2">View pair</Link></TableCell> 
                </TableRow>
              )

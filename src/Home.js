@@ -9,18 +9,9 @@ import chad from './media/Chad.jpg'
 import Grid from '@material-ui/core/Grid';
 
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from 'react-router-dom';
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(2),
-    display: 'flex',
-    flexDirection: 'column',
     alignItems: 'center',
   },
   avatar: {
@@ -35,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(2),
     },
     flexGrow: 1,
+    alignItems: 'center',
   },
 
 }));
@@ -45,23 +37,20 @@ const useStyles = makeStyles((theme) => ({
     const classes = useStyles();
 
   return (
-    <Grid container spacing={3} direction="row"  direction="column" justify="center"alignItems="center">
+    <Grid container className={classes.root}spacing={3} direction="row"  direction="column" justify="center" alignItems="center">
       <Grid item xl={10} xs={12}>
       <CssBaseline />
 
-      <div className={classes.paper}>
+      <Grid container justify="center" >
       <Typography variant="h1" color="inherit" className={classes.toolbarTitle}>Welcome Alpha Degen </Typography>
-
-      <div className={classes.root}>
-      <div className={classes.root}>
-      <img height="500" src={chad} alt="chad" />
-      <br />  
-      <strong>To get info about official launch, <a href="https://docs.google.com/forms/d/199Dsxbk1OHdoyo3xxsrA-5oJ9PEkYtp6pbM7U428EiU" target="_blank">sign up here</a> or follow on telegram  <a href="https://t.me/alphadegen">here</a></strong>
-      <br />  
-      <br />  
-      </div>
-      </div>
-      </div>
+      <Grid item item xl={5} xs={12}>
+          <img height="500" src={chad} alt="chad" />
+          <br />  
+          <strong>To get info about official launch, <a href="https://docs.google.com/forms/d/199Dsxbk1OHdoyo3xxsrA-5oJ9PEkYtp6pbM7U428EiU" target="_blank">sign up here</a> or follow on telegram  <a href="https://t.me/alphadegen">here</a></strong>
+          <br />  
+          <br />  
+         </Grid>
+        </Grid>
       </Grid>
       </Grid>
   );
