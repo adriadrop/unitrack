@@ -17,8 +17,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import useSound from 'use-sound';
-import alarm from './media/alarm.mp3';
 
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -26,6 +24,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Alert from '@material-ui/lab/Alert';
+import Grid from '@material-ui/core/Grid';
+
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -72,6 +72,7 @@ const useStyles = makeStyles((theme) => ({
     '& > *': {
       margin: theme.spacing(1),
     },
+    flexGrow: 1,
   },
   extendedButton: {
     marginTop: theme.spacing(2),
@@ -157,7 +158,6 @@ function AppTable() {
     }
   })
 
-  const [play] = useSound(alarm,{ volume: 0.95 });
   const pairs = data && data.pairs
 
   const classes = useStyles();
@@ -224,7 +224,8 @@ function AppTable() {
   )
 
   return (
-    <Container component="main" maxWidth="xl">
+    <Grid container spacing={3} direction="row" alignItems="center" >
+      <Grid item xl={12}>
       <CssBaseline />
 
       <div className={classes.paper}>
@@ -287,7 +288,8 @@ function AppTable() {
       <Alert severity="success" className={classes.infoBottom}>Donate if helpful 0x777a7dC0c7CC331ac0D8A99f723F547EBCC7B366</Alert>   
       </div>       
       </div>
-    </Container>
+        </Grid>
+      </Grid>
   )
 }
 

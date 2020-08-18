@@ -18,6 +18,7 @@ import Typography from '@material-ui/core/Typography';
 import useSound from 'use-sound';
 import alarm from './media/alarm.mp3';
 import Alert from '@material-ui/lab/Alert';
+import Grid from '@material-ui/core/Grid';
 
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react"
 import Loading from './Loading'
@@ -66,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
     '& > * + *': {
       marginLeft: theme.spacing(2),
     },
+    flexGrow: 1,
   },
   infoBottom: {
     marginTop: theme.spacing(2),
@@ -198,7 +200,8 @@ function HuntTable() {
   var rowNumber = 0;
 
   return (
-    <Container component="main" maxWidth="xl">
+    <Grid container spacing={3} direction="row" alignItems="center" >
+      <Grid item xl={12}>
       <CssBaseline />
       <div className={classes.paper}>
       <Typography variant="h1" color="inherit" noWrap className={classes.toolbarTitle}>Hunt for Gems</Typography>
@@ -408,7 +411,8 @@ function HuntTable() {
         <Alert severity="warning" className={classes.infoBottom}>Page is refreshed every 14 seconds (or one eth block)</Alert> 
         <Alert severity="success" className={classes.infoBottom}>Donate if helpful 0x777a7dC0c7CC331ac0D8A99f723F547EBCC7B366</Alert>       
       </div>
-    </Container>
+       </Grid>
+      </Grid>
   )
 }
 

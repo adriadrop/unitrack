@@ -17,8 +17,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import useSound from 'use-sound';
-import alarm from './media/alarm.mp3';
 
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -26,6 +24,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Alert from '@material-ui/lab/Alert';
+import Grid from '@material-ui/core/Grid';
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -72,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
     '& > *': {
       margin: theme.spacing(1),
     },
+    flexGrow: 1,
   },
   extendedButton: {
     marginTop: theme.spacing(2),
@@ -111,7 +111,7 @@ export const numberFormat = (value) =>
 
 const NEW_PAIRS = gql `
   query pairs($reserveUSD: Int!, $timeStamp: Int!, $txCount: Int!){
-    pairs(where: {reserveUSD_lt: $reserveUSD, createdAtTimestamp_gt: $timeStamp, txCount_gt: $txCount} first: 100, 
+    pairs(where: {reserveUSD_lt: $reserveUSD, createdAtTimestamp_gt: $timeStamp, txCount_gt: $txCount} first: 1000, 
     orderBy: createdAtTimestamp, orderDirection: desc) {
       id
       txCount
@@ -157,7 +157,6 @@ function AppTable() {
     }
   })
 
-  const [play] = useSound(alarm,{ volume: 0.95 });
   const pairs = data && data.pairs
 
   const classes = useStyles();
@@ -167,7 +166,7 @@ function AppTable() {
 
   const SelectTxCount = () => (
     <FormControl className={classes.formControl}>
-    <InputLabel id="demo-simple-select-label">Tx Count &gt;</InputLabel>
+    <InputLabel id="demo-simple-select-label">Tx Count &lt;</InputLabel>
     <Select     
       labelId="demo-simple-select-label"
       id="demo-simple-select"
@@ -208,12 +207,12 @@ function AppTable() {
   )
 
   return (
-    <Container component="main" maxWidth="xl">
+    <Grid container spacing={3} direction="row" alignItems="center" >
+      <Grid item xl={12}>
       <CssBaseline />
 
       <div className={classes.paper}>
       <Typography variant="h1" color="inherit" noWrap className={classes.toolbarTitle}>Rug pulls or failed</Typography>
-
       <div className={classes.root}>
       <SelectTxCount/>
       <SelectTimeStamp/>    
@@ -267,10 +266,12 @@ function AppTable() {
         </Table>
 
       </TableContainer>     
+      <Alert severity="warning" className={classes.infoTop}>Maximum 1000 results</Alert>
       <Alert severity="success" className={classes.infoBottom}>Donate if helpful 0x777a7dC0c7CC331ac0D8A99f723F547EBCC7B366</Alert>   
       </div>       
       </div>
-    </Container>
+       </Grid>
+      </Grid>
   )
 }
 
