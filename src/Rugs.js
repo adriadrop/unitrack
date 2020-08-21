@@ -210,7 +210,7 @@ function AppTable() {
       <CssBaseline />
 
       <div className={classes.paper}>
-      <Typography variant="h1" color="inherit" className={classes.toolbarTitle}>Rug pulls or failed</Typography>
+      <Typography variant="h2" color="inherit" className={classes.toolbarTitle}>Rug pulls or failed uniswap projects</Typography>
       <div className={classes.root}>
       <SelectTxCount/>
       <SelectTimeStamp/>    

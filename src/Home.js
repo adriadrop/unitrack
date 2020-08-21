@@ -28,6 +28,11 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     alignItems: 'center',
   },
+  div: {
+    marginTop: theme.spacing(2),
+    width: '50%', 
+    alignItems: 'center',
+  },
 
 }));
 
@@ -37,19 +42,19 @@ const useStyles = makeStyles((theme) => ({
     const classes = useStyles();
 
   return (
-    <Grid container className={classes.root}spacing={3} direction="row"  direction="column" justify="center" alignItems="center">
-      <Grid item xl={10} xs={12}>
+    <Grid container className={classes.root} spacing={3} direction="row"  direction="column" justify="center" alignItems="center">
+      <Grid item xl={8} xs={12}>
       <CssBaseline />
 
       <Grid container justify="center" >
-      <Typography variant="h1" color="inherit" className={classes.toolbarTitle}>Welcome Alpha Degen </Typography>
-      <Grid item item xl={5} xs={12}>
+      <Typography variant="h2" color="inherit" className={classes.toolbarTitle}>Welcome Alpha Degen </Typography>
+      <div className={classes.div}>
           <img height="500" src={chad} alt="chad" />
           <br />  
           <strong>To get info about official launch, <a href="https://docs.google.com/forms/d/199Dsxbk1OHdoyo3xxsrA-5oJ9PEkYtp6pbM7U428EiU" target="_blank">sign up here</a> or follow on telegram  <a href="https://t.me/alphadegen">here</a></strong>
           <br />  
           <br />  
-         </Grid>
+        </div>
         </Grid>
       </Grid>
       </Grid>

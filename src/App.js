@@ -90,10 +90,10 @@ function App() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose} component={Link} to="/">Home</MenuItem>
-        <MenuItem onClick={handleClose} component={Link} to="/filter">All projects</MenuItem>
+        <MenuItem onClick={handleClose} component={Link} to="/">All projects</MenuItem>
         <MenuItem onClick={handleClose} component={Link} to="/hunt">New</MenuItem>
         <MenuItem onClick={handleClose} component={Link} to="/rugs">Rugs</MenuItem>
+        <MenuItem onClick={handleClose} component={Link} to="/about">About</MenuItem>
         
       </Menu>
 
@@ -106,16 +106,16 @@ function App() {
         */}
         <Switch>
           <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/filter">
             <AppTable />
-          </Route>           
+          </Route>         
           <Route path="/hunt">
             <HuntTable />
           </Route>
           <Route path="/rugs">
             <Rugs />
+          </Route>   
+          <Route path="/about">
+            <Home />
           </Route>                    
         </Switch>
       </div>

@@ -227,7 +227,7 @@ function AppTable() {
       <CssBaseline />
 
       <div className={classes.paper}>
-      <Typography variant="h1" color="inherit" className={classes.toolbarTitle}>Filter all projects</Typography>
+      <Typography variant="h2" color="inherit" className={classes.toolbarTitle}>Filter all Uniswap projects</Typography>
 
       <div className={classes.root}>
       <SelectReserveUSD/>

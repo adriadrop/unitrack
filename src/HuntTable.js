@@ -203,7 +203,7 @@ function HuntTable() {
       <Grid item xl={10} xs={12}>
       <CssBaseline />
       <div className={classes.paper}>
-      <Typography variant="h1" color="inherit" className={classes.toolbarTitle}>Hunt for Gems</Typography>
+      <Typography variant="h2" color="inherit" className={classes.toolbarTitle}>Hunt for Uniswap Gems</Typography>
       <Alert severity="info" className={classes.infoTop}>What does this page do? It searches uniswap for newly listed GEMS and displays them in grouped trajectories. 20/5 means higher than 20 trx in first 5 minutes after uniswap listing, 50/15 means higher than 50 trx in 15 minutes, 100/60 means higher than 100 trx in 1 hour, 300/120 means hihger than 300 trx in 2 hours</Alert> 
       <div className={classes.root}>
       <TableContainer component={Paper}>
