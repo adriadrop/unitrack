@@ -109,7 +109,7 @@ export const numberFormat = (value) =>
 
 const NEW_PAIRS = gql `
   query pairs($reserveUSD: Int!, $timeStamp: Int!, $txCount: Int!){
-    pairs(where: {reserveUSD_lt: $reserveUSD, createdAtTimestamp_gt: $timeStamp, txCount_gt: $txCount} first: 1000, 
+    pairs(where: {reserveUSD_lt: $reserveUSD, createdAtTimestamp_gt: $timeStamp, txCount_gt: $txCount} first: 100, 
     orderBy: createdAtTimestamp, orderDirection: desc) {
       id
       txCount
@@ -164,14 +164,14 @@ function AppTable() {
 
   const SelectTxCount = () => (
     <FormControl className={classes.formControl}>
-    <InputLabel id="demo-simple-select-label">Tx Count &lt;</InputLabel>
+    <InputLabel id="demo-simple-select-label">Tx Count &gt;</InputLabel>
     <Select     
       labelId="demo-simple-select-label"
       id="demo-simple-select"
       value={filtersState.txCountState} 
       onChange={(event) => setFilters({reserveState: filtersState.reserveState, timeStampState: filtersState.timeStampState, txCountState: event.target.value})} >
 
-          <MenuItem value={1}>1</MenuItem>
+          <MenuItem value={0}>0</MenuItem>
           <MenuItem value={10}>10</MenuItem>
           <MenuItem value={100}>100</MenuItem>
           <MenuItem value={1000}>1000</MenuItem>    
