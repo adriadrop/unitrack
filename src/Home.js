@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
       <div className={classes.div}>
           <img height="500" src={chad} alt="chad" />
           <br />  
-          <strong>To get info about official launch, <a href="https://docs.google.com/forms/d/199Dsxbk1OHdoyo3xxsrA-5oJ9PEkYtp6pbM7U428EiU" target="_blank">sign up here</a> or follow on telegram  <a href="https://t.me/alphadegen">here</a></strong>
+          <strong>To request a feature send it over telegram group <a href="https://t.me/alpha_degen">here</a></strong>
           <br />  
           <br />  
         </div>
