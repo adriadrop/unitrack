@@ -15,13 +15,18 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import useSound from 'use-sound';
-import alarm from './media/alarm.mp3';
 import Alert from '@material-ui/lab/Alert';
 import Grid from '@material-ui/core/Grid';
 
-import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react"
-import Loading from './Loading'
+import useSound from 'use-sound';
+import alarm from './media/alarm.mp3';
+
+const BoopButton = () => {
+  const [play] = useSound(alarm);
+  useEffect(()=>play(),[play])
+  return <button disabled onClick={play}>Alarm!</button>;
+};
+
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -239,7 +244,7 @@ function HuntTable() {
 
             return (
                <TableRow key = {key}>
-                   <TableCell>{rowNumber}</TableCell>
+                   <TableCell><BoopButton/></TableCell>
                    <TableCell>{item.token0.name} <Link href= {"https://uniswap.info/token/" + item.token0.id} target="_blank" variant="body2">1</Link>  <Link href= {"https://etherscan.io/address/" + item.token0.id} target="_blank">2</Link></TableCell>  
                    <TableCell>{item.token1.name} <Link href= {"https://uniswap.info/token/" + item.token1.id} target="_blank" variant="body2">1</Link>  <Link href= {"https://etherscan.io/address/" + item.token1.id} target="_blank">2</Link></TableCell>                  
                    <TableCell>{item.txCount}</TableCell>
@@ -288,7 +293,7 @@ function HuntTable() {
 
             return (
                <TableRow key = {key}>
-                    <TableCell>{rowNumber}</TableCell>
+                   <TableCell><BoopButton/></TableCell>
                    <TableCell>{item.token0.name} <Link href= {"https://uniswap.info/token/" + item.token0.id} target="_blank" variant="body2">1</Link>  <Link href= {"https://etherscan.io/address/" + item.token0.id} target="_blank">2</Link></TableCell>  
                    <TableCell>{item.token1.name} <Link href= {"https://uniswap.info/token/" + item.token1.id} target="_blank" variant="body2">1</Link>  <Link href= {"https://etherscan.io/address/" + item.token1.id} target="_blank">2</Link></TableCell>                  
                    <TableCell>{item.txCount}</TableCell>
@@ -337,7 +342,7 @@ function HuntTable() {
 
             return (
                <TableRow key = {key}>
-                    <TableCell>{rowNumber}</TableCell>
+                   <TableCell><BoopButton/></TableCell>
                    <TableCell>{item.token0.name} <Link href= {"https://uniswap.info/token/" + item.token0.id} target="_blank" variant="body2">1</Link>  <Link href= {"https://etherscan.io/address/" + item.token0.id} target="_blank">2</Link></TableCell>  
                    <TableCell>{item.token1.name} <Link href= {"https://uniswap.info/token/" + item.token1.id} target="_blank" variant="body2">1</Link>  <Link href= {"https://etherscan.io/address/" + item.token1.id} target="_blank">2</Link></TableCell>                  
                    <TableCell>{item.txCount}</TableCell>
@@ -387,7 +392,7 @@ function HuntTable() {
 
             return (
                <TableRow key = {key}>
-                   <TableCell>{rowNumber}</TableCell>
+                   <TableCell><BoopButton/></TableCell>
                    <TableCell>{item.token0.name} <Link href= {"https://uniswap.info/token/" + item.token0.id} target="_blank" variant="body2">1</Link>  <Link href= {"https://etherscan.io/address/" + item.token0.id} target="_blank">2</Link></TableCell>  
                    <TableCell>{item.token1.name} <Link href= {"https://uniswap.info/token/" + item.token1.id} target="_blank" variant="body2">1</Link>  <Link href= {"https://etherscan.io/address/" + item.token1.id} target="_blank">2</Link></TableCell>                  
                    <TableCell>{item.txCount}</TableCell>
@@ -407,7 +412,7 @@ function HuntTable() {
 
       </TableContainer>  
         </div>    
-        <Alert severity="warning" className={classes.infoBottom}>Page is refreshed every 14 seconds (or one eth block)</Alert> 
+        <Alert severity="warning" className={classes.infoBottom}>Page is refreshed every 14 seconds (or roughly one eth block), there is also sound ALARM when something is caught so you can leave the page to work in Background</Alert> 
         <Alert severity="success" className={classes.infoBottom}>Donate if helpful 0x777a7dC0c7CC331ac0D8A99f723F547EBCC7B366</Alert>       
       </div>
        </Grid>
