@@ -74,7 +74,6 @@ const useStyles = makeStyles((theme) => ({
   },
   infoBottom: {
     marginTop: theme.spacing(2),
-    width: '50%', 
   },
   infoTop: {
     marginTop: theme.spacing(2),
@@ -114,10 +113,12 @@ const NEW_PAIRS = gql `
     token0 {
       name
       id
+      derivedETH
     }
     token1 {
       name
       id
+      derivedETH
     }
     }
   }

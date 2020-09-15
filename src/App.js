@@ -4,6 +4,7 @@ import AppTable from './AppTable'
 import HuntTable from './HuntTable'
 import Home from './Home'
 import Rugs from './Rugs'
+import Hunt5 from './Hunt5'
 
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
@@ -96,7 +97,8 @@ function App() {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose} component={Link} to="/">All projects</MenuItem>
-        <MenuItem onClick={handleClose} component={Link} to="/hunt">New</MenuItem>
+        <MenuItem onClick={handleClose} component={Link} to="/hunt">New and rising</MenuItem>
+        <MenuItem onClick={handleClose} component={Link} to="/hunt5">Brand New</MenuItem>        
         <MenuItem onClick={handleClose} component={Link} to="/rugs">Rugs</MenuItem>
         <MenuItem onClick={handleClose} component={Link} to="/about">About</MenuItem>
         
@@ -116,6 +118,9 @@ function App() {
           <Route path="/hunt">
             <HuntTable />
           </Route>
+          <Route path="/hunt5">
+            <Hunt5 />
+          </Route>             
           <Route path="/rugs">
             <Rugs />
           </Route>   
