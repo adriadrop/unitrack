@@ -176,7 +176,7 @@ function Hunt5() {
       <Grid item xl={10} xs={12}>
       <CssBaseline />
       <div className={classes.paper}>
-      <Typography variant="h2" color="inherit" className={classes.toolbarTitle}>Hunt for Uniswap </Typography>
+      <Typography variant="h2" color="inherit" className={classes.toolbarTitle}>Catch new Uniswap listings</Typography>
       <Alert severity="info" className={classes.infoTop}>What does this page do? It checks for listed Uniswap projects in last 5 minutes and with higher then 50k USD liquidity</Alert> 
       <div className={classes.root}>
       <TableContainer component={Paper}>
