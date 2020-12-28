@@ -1,6 +1,7 @@
 import React, {} from 'react'
 import './App.css'
 import AppTable from './AppTable'
+import DayTable from './DayTable'
 import HuntTable from './HuntTable'
 import Home from './Home'
 import Rugs from './Rugs'
@@ -115,6 +116,9 @@ function App() {
           <Route exact path="/">
             <AppTable />
           </Route>         
+          <Route path="/volume">
+            <DayTable />
+          </Route>
           <Route path="/hunt">
             <HuntTable />
           </Route>
