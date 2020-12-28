@@ -114,6 +114,7 @@ const NEW_PAIRS = gql `
       txCount
       totalSupply
       volumeUSD
+      untrackedVolumeUSD
       reserveUSD
       createdAtTimestamp
     token0 {
@@ -239,7 +240,7 @@ function AppTable() {
           <StyledTableCell>Token 1 Uniswap/Etherscan</StyledTableCell>
           <StyledTableCell>Token 2 Uniswap/Etherscan</StyledTableCell>
           <StyledTableCell>Total TX count</StyledTableCell>
-          <StyledTableCell>Volume USD</StyledTableCell>
+          <StyledTableCell>All Volume</StyledTableCell>
           <StyledTableCell>Current liquidity</StyledTableCell>
           <StyledTableCell>Creation date</StyledTableCell>
           <StyledTableCell>Price T1/T2</StyledTableCell>
@@ -261,6 +262,12 @@ function AppTable() {
             
             formattedDate = formattedDate + " " + formattedTime;
             rowNumber++;
+
+            if (item.volumeUSD !=0) {
+              var totalVolume = numberFormat(item.volumeUSD);
+            } else {
+              var totalVolume = numberFormat(item.untrackedVolumeUSD) + " (un)";
+            }
             
             return (
                <TableRow key = {key}>
@@ -268,7 +275,7 @@ function AppTable() {
                    <TableCell>{item.token0.name} <Link href= {"https://uniswap.info/token/" + item.token0.id} target="_blank" variant="body2">1</Link>  <Link href= {"https://etherscan.io/address/" + item.token0.id} target="_blank">2</Link></TableCell>  
                    <TableCell>{item.token1.name} <Link href= {"https://uniswap.info/token/" + item.token1.id} target="_blank" variant="body2">1</Link>  <Link href= {"https://etherscan.io/address/" + item.token1.id} target="_blank">2</Link></TableCell>                  
                    <TableCell>{item.txCount}</TableCell>
-                   <TableCell>{numberFormat(item.volumeUSD)}</TableCell>
+                   <TableCell>{totalVolume}</TableCell>
                    <TableCell>{numberFormat(item.reserveUSD)}</TableCell>
                    <TableCell>{formattedDate}</TableCell>    
                    <TableCell>{numberFormat(priceEth * item.token0.derivedETH) + " / " + numberFormat(priceEth * item.token1.derivedETH)}</TableCell>                                     
