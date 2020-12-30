@@ -1,7 +1,8 @@
 import React, {} from 'react'
 import './App.css'
 import AppTable from './AppTable'
-import DayTable from './DayTable'
+import YestDayTable from './YestDayTable'
+import ToDayTable from './ToDayTable'
 import HuntTable from './HuntTable'
 import Home from './Home'
 import Rugs from './Rugs'
@@ -98,6 +99,7 @@ function App() {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose} component={Link} to="/">All projects</MenuItem>
+        <MenuItem onClick={handleClose} component={Link} to="/ylp">Yesterday LP stats</MenuItem>
         <MenuItem onClick={handleClose} component={Link} to="/hunt">New and rising</MenuItem>
         <MenuItem onClick={handleClose} component={Link} to="/hunt5">Brand New</MenuItem>        
         <MenuItem onClick={handleClose} component={Link} to="/rugs">Rugs</MenuItem>
@@ -116,8 +118,11 @@ function App() {
           <Route exact path="/">
             <AppTable />
           </Route>         
-          <Route path="/volume">
-            <DayTable />
+          <Route path="/ylp">
+            <YestDayTable />
+          </Route>
+          <Route path="/tlp">
+            <ToDayTable />
           </Route>
           <Route path="/hunt">
             <HuntTable />

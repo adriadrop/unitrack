@@ -101,20 +101,19 @@ export const numberFormat = (value) =>
   .then(response => response.json())
   .then(data=> {priceEth = data.result.ethusd; });
 
-
-
 // Graph https://thegraph.com/docs/graphql-api#queries
 // Uniswap queries https://uniswap.org/docs/v2/API/queries/
 
 const NEW_PAIRS = gql `
-  query pairDayDatas($reserveUSD: Int!, $dailyVolumeUSD: Int!, $dailyTxns: Int!){
-    pairDayDatas(where: {reserveUSD_gt: $reserveUSD, dailyVolumeUSD_gt: $dailyVolumeUSD, dailyTxns_gt: $dailyTxns} first: 100, 
+  query pairDayDatas($reserveUSD: Int!, $dailyVolumeUSD: Int!, $dailyTxns: Int!, $timeStampLt: Int!, $timeStampGt: Int!){
+    pairDayDatas(where: {reserveUSD_gt: $reserveUSD, dailyVolumeUSD_gt: $dailyVolumeUSD, dailyTxns_gt: $dailyTxns, date_gt: $timeStampGt, date_lt: $timeStampLt} first: 100, 
     orderBy: dailyVolumeUSD, orderDirection: desc) {
       id
       pairAddress
       dailyTxns
       reserveUSD
       dailyVolumeUSD
+      date
     token0 {
       name
       id
@@ -129,7 +128,7 @@ const NEW_PAIRS = gql `
   }
  `
 
-function DayTable() {
+function YestDayTable() {
 
   function handleClick(e) {
         e.preventDefault();
@@ -150,6 +149,8 @@ function DayTable() {
       reserveUSD: filtersState.reserveState,
       dailyTxns: filtersState.txCountState,
       dailyVolumeUSD: filtersState.dailyVolumeUSDState,
+      timeStampLt : Math.floor(Date.now() / 1000) - 86400*1,
+      timeStampGt : Math.floor(Date.now() / 1000) - 86400*2,
     }
   })
 
@@ -219,7 +220,7 @@ function DayTable() {
       <CssBaseline />
 
       <div className={classes.paper}>
-      <Typography variant="h2" color="inherit" className={classes.toolbarTitle}>Uniswap projects Daily Volumes</Typography>
+      <Typography variant="h2" color="inherit" className={classes.toolbarTitle}>Uniswap LP yesterday (UTC)</Typography>
 
       <div className={classes.root}>
       <SelectReserveUSD/>
@@ -235,7 +236,9 @@ function DayTable() {
           <StyledTableCell>Daily TX count</StyledTableCell>
           <StyledTableCell>Daily Volume USD</StyledTableCell>
           <StyledTableCell>Current liquidity</StyledTableCell>
-          <StyledTableCell>Price T1/T2</StyledTableCell>
+          <StyledTableCell>Volume/Liq ratio</StyledTableCell>
+          <StyledTableCell>Daily Fees</StyledTableCell>
+          <StyledTableCell>Fees per $1000 invested</StyledTableCell>
           <StyledTableCell>Uniswap</StyledTableCell>
           </TableRow>
         </TableHead>
@@ -246,7 +249,18 @@ function DayTable() {
           :(pairs.length?
           pairs.map(function(item, key) {
             
+            var d = new Date(item.date * 1000);
+            var formattedDate = d.getDate() + "/" + (d.getMonth() + 1); // + "-" + d.getFullYear();
+            var hours = (d.getHours() < 10) ? "0" + d.getHours() : d.getHours();
+            var minutes = (d.getMinutes() < 10) ? "0" + d.getMinutes() : d.getMinutes();
+            var formattedTime = hours + ":" + minutes;
+            
+            formattedDate = formattedDate + " " + formattedTime;
             rowNumber++;
+
+            var fees = item.dailyVolumeUSD * 0.003
+            var feesDollar = fees / item.reserveUSD * 1000
+            var volumeLiqRatio = item.dailyVolumeUSD / item.reserveUSD
             
             return (
                <TableRow key = {key}>
@@ -256,7 +270,9 @@ function DayTable() {
                    <TableCell>{item.dailyTxns}</TableCell>
                    <TableCell>{numberFormat(item.dailyVolumeUSD)}</TableCell>
                    <TableCell>{numberFormat(item.reserveUSD)}</TableCell>
-                   <TableCell>{numberFormat(priceEth * item.token0.derivedETH) + " / " + numberFormat(priceEth * item.token1.derivedETH)}</TableCell>                                     
+                   <TableCell>{volumeLiqRatio.toFixed(2)}</TableCell>
+                   <TableCell>{numberFormat(fees)}</TableCell>       
+                   <TableCell>{numberFormat(feesDollar)}</TableCell>                                 
                    <TableCell><Link href= {"https://uniswap.info/pair/" + item.pairAddress} target="_blank" variant="body2">View pair</Link></TableCell> 
                </TableRow>
              )          
@@ -266,6 +282,7 @@ function DayTable() {
         </Table>
 
       </TableContainer>     
+      <Alert severity="info" className={classes.infoTop}>Search for pairs with $2-$3 with fees per $1000, more then that are usualy risky scams and possible rug pulls or very new and have lots of entry demand. Pairs with ETH get more fees then those with stables. Pairs with low liq/volume ratio are those that have liquidity mining and you get more if you stake them on projects site.</Alert> 
       <Alert severity="success" className={classes.infoBottom}>Donate if helpful 0x777a7dC0c7CC331ac0D8A99f723F547EBCC7B366</Alert>   
       </div>       
       </div>
@@ -275,4 +292,4 @@ function DayTable() {
 }
 
 
-export default DayTable
+export default YestDayTable
